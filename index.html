@@ -226,7 +226,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-08-18 00:55:00 / Modified: 01:15:12" itemprop="dateCreated datePublished" datetime="2025-08-18T00:55:00+08:00">2025-08-18</time>
+      <time title="Created: 2025-08-18 00:55:00 / Modified: 01:17:43" itemprop="dateCreated datePublished" datetime="2025-08-18T00:55:00+08:00">2025-08-18</time>
     </span>
 
   
@@ -239,8 +239,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>[toc]</p>
-<h1 id="用-Rust-和-Actix-web-从零开始写一个-RESTful-API"><a href="#用-Rust-和-Actix-web-从零开始写一个-RESTful-API" class="headerlink" title="用 Rust 和 Actix-web 从零开始写一个 RESTful API"></a>用 Rust 和 Actix-web 从零开始写一个 RESTful API</h1><blockquote>
+          <h1 id="用-Rust-和-Actix-web-从零开始写一个-RESTful-API"><a href="#用-Rust-和-Actix-web-从零开始写一个-RESTful-API" class="headerlink" title="用 Rust 和 Actix-web 从零开始写一个 RESTful API"></a>用 Rust 和 Actix-web 从零开始写一个 RESTful API</h1><blockquote>
 <p>目标读者：有 Rust 基础、第一次用 Actix-web 的同学<br>阅读时间：20 分钟<br>最终成果：一个能跑在本地 8080 端口、带 CRUD 的 Todo API，并附带完整的目录结构与测试用例。</p>
 </blockquote>
 <h2 id="1-为什么要选-Actix-web？"><a href="#1-为什么要选-Actix-web？" class="headerlink" title="1. 为什么要选 Actix-web？"></a>1. 为什么要选 Actix-web？</h2><p>Actix-web 是目前 Rust 生态里<strong>性能最好</strong>、<strong>文档最完整</strong>、<strong>第三方支持最多</strong>的 Web 框架之一。<br>它基于 actor 模型，配合 async&#x2F;await，QPS 实测能轻松破 100k（当然，我们的重点还是“开发体验”）。</p>
