@@ -7,91 +7,102 @@ import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
 const posts = await getCollection("blog");
-const sortedPosts = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);
-const recentPosts = sortedPosts.slice(0, SITE.postPerIndex);
+
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
 <Layout>
   <Header />
   <main id="main-content" data-layout="index">
-    <!-- Hero：紧凑卡片，无留白 -->
-    <section id="hero" class="pt-6 pb-4">
-      <div class="rounded-xl bg-skin-card p-5">
-        <h1 class="mb-2 text-3xl font-bold sm:text-4xl">
-          👋 嗨，终于等到你！
-        </h1>
+    <section id="hero" class="pt-8 pb-6">
+      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
+        Mingalaba
+      </h1>
+      <a
+        target="_blank"
+        href="/rss.xml"
+        class="inline-block"
+        aria-label="rss feed"
+        title="RSS Feed"
+      >
+        <IconRss
+          width={20}
+          height={20}
+          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
+        />
+        <span class="sr-only">RSS Feed</span>
+      </a>
 
-        <p class="mb-2 text-skin-muted">
-          这里是 <strong>「Night Owlong 的夜航日志」</strong>，一盏深夜不熄的小灯，记录我在学习、生活与星辰大海之间的漫游。<br />
-          “写东西，是为了让时间留下回声。”如果你也相信文字有温度，那我们一起把回声放大。
-        </p>
-
-        <p class="mb-2">
-          🧭 在这艘小船里，你能遇见：<br />
-          • <strong>学习笔记</strong> —— 专业学习笔记、技术分享、杂七杂八的踩坑记录<br />
-          • <strong>阅读札记</strong> —— 读完一本书，总要留下几句心跳<br />
-          • <strong>日常闪光</strong> —— 一段旋律、一道菜、一次旅行，都值得被存档<br />
-          • <strong>开源碎片</strong> —— 任何我觉得「或许对别人有用」的小轮子
-        </p>
-
-        <p class="mb-2">
-          📬 如何与我保持同频：<br />
-          • <strong>留言</strong> —— 欢迎随时拍砖或灌水<br />
-          • <strong>GitHub</strong> —— <a href="https://github.com/NightOwlong" class="link">NightOwlong</a> 看源码、提 Issue 都欢迎<br />
-          • <strong>邮件</strong> —— <a href="mailto:starsdusts@foxmail.com" class="link">starsdusts@foxmail.com</a>，24 小时内必回
-        </p>
-
-        <p class="mb-2">
-          🏁 让我们开始吧！第一篇文章已经就位，下一篇正在路上。愿你在这里读到的东西，也能成为你自己的注脚。<br />
-          “山高路远，幸而有光。”再次感谢光临，祝阅读愉快！
-        </p>
-
-        <blockquote class="mb-3 border-l-2 border-accent pl-3 italic">
-          —— Night Owlong<br />
-          2024 年 8 月 16 日 · 夜
-        </blockquote>
-
-        <!-- 专业邀请 -->
-        <div class="mt-2 rounded-md bg-skin-secondary p-3">
-          <h3 class="mb-1 text-base font-semibold">🌱 来自水土保持学子的邀请</h3>
-          <p class="text-sm">
-            我是一名水土保持与荒漠化防治专业的学习者，课堂、野外、实验室……每一步都充满未知，也充满希望。
-            欢迎常来坐坐，留下问题、提出批评、分享故事，甚至可以一起写篇文章。
-            山高路远，我们一起让回声更响亮！
-          </p>
-        </div>
-
-        <!-- 联系按钮一行排开 -->
-        <div class="mt-3 flex flex-wrap gap-2">
-          <Socials />
-        </div>
-      </div>
+      <p>
+        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
+        blog theme. This theme follows best practices and provides accessibility
+        out of the box. Light and dark mode are supported by default. Moreover,
+        additional color schemes can also be configured.
+      </p>
+      <p class="mt-2">
+        Read the blog posts or check
+        <LinkButton
+          class="underline decoration-dashed underline-offset-4 hover:text-accent"
+          href="https://github.com/satnaing/astro-paper#readme"
+        >
+          README
+        </LinkButton> for more info.
+      </p>
+      {
+        // only display if at least one social link is enabled
+        SOCIALS.length > 0 && (
+          <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
+            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
+            <Socials />
+          </div>
+        )
+      }
     </section>
 
     <Hr />
 
-    <!-- 最新文章：保持原版卡片，仅去掉额外留白 -->
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured" class="pt-12 pb-6">
+            <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
+            <ul>
+              {featuredPosts.map(data => (
+                <Card variant="h3" {...data} />
+              ))}
+            </ul>
+          </section>
+          {recentPosts.length > 0 && <Hr />}
+        </>
+      )
+    }
+
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-4 pb-4">
-          <h2 class="mb-2 text-2xl font-semibold tracking-wide">最新文章</h2>
-          <ul class="space-y-3">
-            {recentPosts.map((post) => (
-              <Card variant="h3" {...post} />
-            ))}
+        <section id="recent-posts" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
+          <ul>
+            {recentPosts.map(
+              (data, index) =>
+                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+            )}
           </ul>
         </section>
       )
     }
 
-    <div class="py-4 text-center">
+    <div class="my-8 text-center">
       <LinkButton href="/posts/">
-        查看全部故事
+        All Posts
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>
     </div>
