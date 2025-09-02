@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "type": "folder",
+      "ctime": 1756804357129,
+      "path": "assets/images",
+      "title": "图片资源"
+    },
+    {
+      "type": "folder",
+      "ctime": 1756804379875,
+      "path": "data/blog",
+      "title": "博客源文件"
+    }
+  ]
+}
