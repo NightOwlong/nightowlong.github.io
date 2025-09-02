@@ -8,9 +8,7 @@ featured: true
 draft: false
 tags:
   - docs
-description:
-  Some rules & recommendations for creating or adding new posts using AstroPaperr
-  theme.
+description: Some rules & recommendations for creating or adding new posts using AstroPaperr theme.
 ---
 
 Here are some rules/recommendations, tips & ticks for creating new posts in AstroPaper blog theme.
