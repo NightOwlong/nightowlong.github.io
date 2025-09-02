@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data/blog/水土保持规划学绪论及法律体系.md",
+                "file": "data/blog/智慧农业：AI如何重塑千年古老的产业.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "水土保持规划学绪论及法律体系"
+              "title": "智慧农业：AI如何重塑千年古老的产业"
             }
           }
         ]
@@ -169,16 +169,29 @@
       "bases:Create new base": false
     }
   },
-  "active": "ab9c90318484f83e",
+  "active": "8c879582cba525c1",
   "lastOpenFiles": [
-    "().md",
+    "assets/images/landscape.png",
+    "assets/images/forrest-gump-quote.png",
+    "assets/images/decission.png",
+    "assets/images/AstroPaper-v5.png",
+    "assets/images/AstroPaper-v4.png",
+    "assets/images/AstroPaper-v3.png",
+    "data/blog/智慧农业：AI如何重塑千年古老的产业.md",
+    "assets/images/智慧农业/第一章/农业的发展.png",
+    "assets/images/智慧农业/第一章/智慧农业.jpg",
+    "assets/images/智慧农业/第一章",
+    "assets/images/智慧农业",
+    "data/blog/一棵树的漫想.md",
     "data/blog/水土保持规划学绪论及法律体系.md",
+    "data/draft/智慧农业概述.md",
+    "data/draft",
+    "().md",
     "assets/images/水土保持规划学/绪论/三类空间、三条红线关系图.png",
     "assets/images/水土保持规划学/绪论/生态效益怎样转换为经济效益.png",
     "assets/images/水土保持规划学/绪论",
     "assets/images/水土保持规划学",
     "assets/images/生态效益怎样转换为经济效益.png",
-    "data/blog/一棵树的漫想.md",
     "pages/about.md~",
     "pages/index.md",
     "config.ts~",
@@ -201,20 +214,8 @@
     "data/dynamic-og-images.md",
     "data/customizing-astropaper-theme-color-schemes.md",
     "data/adding-new-post.md",
-    "data/tutorial/examples/terminal-development.md",
-    "data/tutorial/examples/tailwind-typography.md",
-    "data/tutorial/examples/portfolio-website-development.md",
     "data/tutorial/examples",
     "data/tutorial/_releases",
-    "data/tutorial",
-    "tutorial",
-    "assets/images/decission.png",
-    "assets/images/landscape.png",
-    "data/blog/Untitled.base",
-    "templates",
-    "assets/images/forrest-gump-quote.png",
-    "assets/images/AstroPaper-v5.png",
-    "assets/images/AstroPaper-v4.png",
-    "assets/images/AstroPaper-v3.png"
+    "data/tutorial"
   ]
 }
