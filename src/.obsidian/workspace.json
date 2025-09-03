@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data/blog/包鸾镇的乡村振兴历程.md",
+                "file": "data/draft/水土保持林学2025-09-02.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "包鸾镇的乡村振兴历程"
+              "title": "水土保持林学2025-09-02"
             }
           }
         ]
@@ -171,15 +171,18 @@
   },
   "active": "8c879582cba525c1",
   "lastOpenFiles": [
+    "data/draft/水土保持林学2025-09-03.md",
+    "data/draft/水土保持林学2025-09-02.md",
     "data/draft/智慧农业2025-09-03.md",
+    "data/blog/当田野遇见算法：智慧农业的四重奏.md",
+    "assets/images/智慧农业/第一章/无人机浇灌.jpg",
+    "data/blog/智慧农业：AI如何重塑千年古老的产业.md",
+    "data/draft/学业导师2025-09-03.md",
+    "data/blog/水土保持规划学绪论及法律体系.md",
     "data/blog/包鸾镇的乡村振兴历程.md",
     "assets/images/活动/包鸾村.webp",
     "assets/images/活动/包鸾.png",
     "assets/images/活动",
-    "data/blog/智慧农业：AI如何重塑千年古老的产业.md",
-    "data/draft/水土保持林学2025-09-02.md",
-    "data/draft/学业导师2025-09-03.md",
-    "data/draft/水土保持林学2025-09-03.md",
     "assets/images/landscape.png",
     "assets/images/forrest-gump-quote.png",
     "assets/images/decission.png",
@@ -187,11 +190,9 @@
     "assets/images/AstroPaper-v4.png",
     "assets/images/AstroPaper-v3.png",
     "assets/images/智慧农业/第一章/农业的发展.png",
-    "assets/images/智慧农业/第一章/智慧农业.jpg",
     "assets/images/智慧农业/第一章",
     "assets/images/智慧农业",
     "data/blog/一棵树的漫想.md",
-    "data/blog/水土保持规划学绪论及法律体系.md",
     "data/draft/智慧农业概述.md",
     "data/draft",
     "().md",
@@ -213,8 +214,6 @@
     "data/setting-dates-via-git-hooks.md",
     "data/predefined-color-schemes.md",
     "data/how-to-update-dependencies.md",
-    "data/how-to-integrate-giscus-comments.md",
-    "data/how-to-configure-astropaper-theme.md",
     "data/tutorial/examples",
     "data/tutorial/_releases"
   ]
