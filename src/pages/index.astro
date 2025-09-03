@@ -15,104 +15,88 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
 <Layout>
-  <Header>
-    <style>
-      :root {
-        --ink: #2e2e2e;
-        --paper: #fafafa;
-        --accent: #8c9a5b;
-        --font-serif: "Noto Serif SC", serif;
-        --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", sans-serif;
-      }
-      *{margin:0;padding:0;box-sizing:border-box;}
-      body{
-        background:var(--paper);
-        color:var(--ink);
-        font-family:var(--font-serif);
-        line-height:1.9;
-        letter-spacing:.05em;
-      }
-      /* ---------- 宽度与 Header 对齐 ---------- */
-      .container{
-        width:100%;
-        max-width:768px;      /* 与 Header 的 max-w-3xl 相同 */
-        margin:0 auto;
-        padding:8vw 1.5rem;   /* 左右留白给移动端 */
-      }
-      /* --------------------------------------- */
-      h1,h2,h3{font-family:var(--font-sans);font-weight:400;}
-      h1{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:2rem;color:var(--accent);}
-      h2{font-size:1.1rem;margin:2.5rem 0 .8rem;border-left:2px solid var(--accent);padding-left:.6rem;}
-      .section-title{font-size:1.5rem;margin-bottom:.75rem;font-weight:600;letter-spacing:.025em;}
-      p{margin-bottom:1rem;}
-      a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border .2s;}
-      a:hover{border-bottom-color:var(--accent);}
-      .contact span{display:block;margin:.2rem 0;}
-      @media(max-width:768px){
-        .container{padding:6vw 1rem;}
-      }
-    </style>
-  </Header>
+  <Header />
+  <!-- 仅新增一段 <style> 让主区域与 Header 同宽，其余不改动 -->
+  <style is:inline>
+    /* 与 Header 同宽 → max-w-3xl = 768px */
+    .index-wrapper {
+      width: 100%;
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 8vw 1.5rem 4vw;
+    }
+    /* 让诗歌标题不换行居中 */
+    .index-wrapper h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--accent, #8c9a5b);
+      margin-bottom: 2rem;
+    }
+    /* 其余样式沿用 Tailwind 主题，不覆盖夜间模式 */
+  </style>
 
-  <main>
-    <div class="container">
-      <!-- 1. 诗歌 -->
-      <h1>把书页、泥土与日常折进同一束光里。</h1>
+  <main id="main-content" class="index-wrapper">
+    <!-- 1. 诗歌 -->
+    <h1 class="text-center">把书页、泥土与日常折进同一束光里。</h1>
 
-      <!-- 2. 关于我 -->
-      <section>
-        <h2>关于我</h2>
-        <p>
-          你好，我是 Night Owlong。<br>
-          白天在课桌前胡思乱想，晚上在灯下补读书笔记。<br>
-          相信知识像水，保持住才能滋养更多生命；<br>
-          相信文字像光，简短也能照得很远。
-        </p>
+    <!-- 2. 关于我 -->
+    <section>
+      <h2 class="text-lg font-semibold mb-2 border-l-2 border-accent pl-2">
+        关于我
+      </h2>
+      <p>
+        你好，我是 Night Owlong。<br />
+        白天在课桌前胡思乱想，晚上在灯下补读书笔记。<br />
+        相信知识像水，保持住才能滋养更多生命；<br />
+        相信文字像光，简短也能照得很远。
+      </p>
+    </section>
+
+    <!-- 3. 与我联系 -->
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold mb-2 border-l-2 border-accent pl-2">
+        与我联系
+      </h2>
+      <span class="block">📞 电话：<a href="tel:+8615330353774" class="link">+86 153 3035 3774</a></span>
+      <span class="block">📧 邮箱：<a href="mailto:starsdusts@foxmail.com" class="link">starsdusts@foxmail.com</a></span>
+      <p class="mt-2 text-sm">
+        欢迎来信交换书单、分享实验，或只是说一句「今天也有被治愈到」。<br />
+        留言通常在 24h 内回复；若遇野外采样，请允许我多带一点泥土的气息回来。
+      </p>
+    </section>
+
+    <footer class="mt-12 text-sm text-center text-secondary">
+      极简留白，是为了给你更多呼吸的空间。
+    </footer>
+
+    <Hr />
+
+    <!-- 4. Featured -->
+    {featuredPosts.length > 0 && (
+      <section id="featured">
+        <h2 class="text-xl font-semibold mb-4">Featured</h2>
+        <ul>
+          {featuredPosts.map(data => <Card variant="h3" {...data} />)}
+        </ul>
       </section>
+    )}
 
-      <!-- 3. 与我联系 -->
-      <section class="contact">
-        <h2>与我联系</h2>
-        <span>📞 电话：<a href="tel:+8615330353774">+86 153 3035 3774</a></span>
-        <span>📧 邮箱：<a href="mailto:starsdusts@foxmail.com">starsdusts@foxmail.com</a></span>
-        <p>
-          欢迎来信交换书单、分享实验，或只是说一句「今天也有被治愈到」。<br>
-          留言通常在 24h 内回复；若遇野外采样，请允许我多带一点泥土的气息回来。
-        </p>
-      </section>
-
-      <footer>
-        <p>极简留白，是为了给你更多呼吸的空间。</p>
-      </footer>
-
+    <!-- 5. Recent Posts -->
+    {recentPosts.length > 0 && (
+      <>
       <Hr />
-
-      <!-- 4. Featured -->
-      {featuredPosts.length > 0 && (
-        <section id="featured">
-          <h2 class="section-title">Featured</h2>
+        {featuredPosts.length > 0 && <Hr />}
+        <section id="recent-posts">
+          <h2 class="text-xl font-semibold mb-4">Recent Posts</h2>
           <ul>
-            {featuredPosts.map(data => <Card variant="h3" {...data} />)}
+            {recentPosts.map(
+              (data, i) =>
+                i < SITE.postPerIndex && <Card variant="h3" {...data} />
+            )}
           </ul>
         </section>
-      )}
-
-      <!-- 5. Recent Posts -->
-      {recentPosts.length > 0 && (
-        <>
-          {featuredPosts.length > 0 && <Hr />}
-          <section id="recent-posts">
-            <h2 class="section-title">Recent Posts</h2>
-            <ul>
-              {recentPosts.map(
-                (data, i) =>
-                  i < SITE.postPerIndex && <Card variant="h3" {...data} />
-              )}
-            </ul>
-          </section>
-        </>
-      )}
-    </div>
+      </>
+    )}
   </main>
 
   <Footer />
