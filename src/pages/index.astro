@@ -12,27 +12,25 @@ const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+// 计算总文章数
+const totalPosts = posts.length;
 ---
 
 <Layout>
   <Header />
-  <!-- 仅新增一段 <style> 让主区域与 Header 同宽，其余不改动 -->
   <style is:inline>
-    /* 与 Header 同宽 → max-w-3xl = 768px */
     .index-wrapper {
       width: 100%;
       max-width: 768px;
       margin: 0 auto;
       padding: 8vw 1.5rem 4vw;
     }
-    /* 让诗歌标题不换行居中 */
     .index-wrapper h1 {
       font-family: var(--font-serif);
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       color: var(--accent, #8c9a5b);
       margin-bottom: 2rem;
     }
-    /* 其余样式沿用 Tailwind 主题，不覆盖夜间模式 */
   </style>
 
   <main id="main-content" class="index-wrapper">
@@ -84,7 +82,6 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     <!-- 5. Recent Posts -->
     {recentPosts.length > 0 && (
       <>
-      <Hr />
         {featuredPosts.length > 0 && <Hr />}
         <section id="recent-posts">
           <h2 class="text-xl font-semibold mb-4">Recent Posts</h2>
@@ -94,6 +91,13 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
                 i < SITE.postPerIndex && <Card variant="h3" {...data} />
             )}
           </ul>
+          
+          <!-- 添加 All Posts 文字链接，包含总文章数 -->
+          <div class="text-right mt-6">
+            <a href="/posts" class="text-accent hover:underline font-medium">
+              All Posts ({totalPosts})
+            </a>
+          </div>
         </section>
       </>
     )}
