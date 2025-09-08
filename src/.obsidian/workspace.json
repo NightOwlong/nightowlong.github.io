@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data/draft/水土保持规划学2025-09-05.md",
+                "file": "data/blog/守护大地脉动：全面解析水土流失与荒漠化监测.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "水土保持规划学2025-09-05"
+              "title": "守护大地脉动：全面解析水土流失与荒漠化监测"
             }
           }
         ]
@@ -169,13 +169,18 @@
       "bases:Create new base": false
     }
   },
-  "active": "8c879582cba525c1",
+  "active": "ab9c90318484f83e",
   "lastOpenFiles": [
+    "Untitled.md",
+    "data/blog/守护大地脉动：全面解析水土流失与荒漠化监测.md",
+    "data/draft/水土保持规划学2025-09-05.md",
+    "data/draft/经济作物栽培学.md",
+    "data/draft/经济作物栽培学2025-09-08.md",
+    "data/draft/水土保持工程学2025-09-08.md",
     "data/blog/守护土壤的脉搏：全面解析中国水土流失现状与治理之路.md",
     "data/blog/当田野遇见算法：智慧农业的四重奏.md",
     "assets/images/水土保持规划学/第一章/东北黑土.jpg",
     "assets/images/水土保持规划学/第一章",
-    "data/draft/水土保持规划学2025-09-05.md",
     "data/draft/水土保持林学2025-09-03.md",
     "data/blog/森林与防护林：生态屏障与可持续发展之路.md",
     "data/blog/水土保持规划学绪论及法律体系.md",
@@ -211,10 +216,6 @@
     "pages/index.md",
     "data/tutorial/how-to-add-latex-equations-in-blog-posts.md",
     "data/tutorial/setting-dates-via-git-hooks.md",
-    "data/tutorial/predefined-color-schemes.md",
-    "data/tutorial/how-to-update-dependencies.md",
-    "data/tutorial/how-to-integrate-giscus-comments.md",
-    "data/tutorial/how-to-configure-astropaper-theme.md",
-    "data/tutorial/dynamic-og-images.md"
+    "data/tutorial/predefined-color-schemes.md"
   ]
 }
