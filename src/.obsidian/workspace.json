@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data/draft/水土保持农学2025-09-09.md",
+                "file": "data/blog/树木的隐形力量：根系如何守护我们的山川水土.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "水土保持农学2025-09-09"
+              "title": "树木的隐形力量：根系如何守护我们的山川水土"
             }
           }
         ]
@@ -169,10 +169,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "8c879582cba525c1",
+  "active": "ab9c90318484f83e",
   "lastOpenFiles": [
-    "data/draft/经济作物栽培学.md",
     "data/draft/水土保持农学2025-09-09.md",
+    "data/blog/树木的隐形力量：根系如何守护我们的山川水土.md",
+    "data/draft/经济作物栽培学.md",
     "data/blog/经济林：分类、价值与未来发展全景透视.md",
     "data/draft/水土保持林学2025-09-03.md",
     "data/blog/土壤侵蚀：类型、形式与防治——了解地球的\"慢性病\".md",
