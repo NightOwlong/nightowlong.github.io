@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data/blog/大地无声的哭泣：我们脚下的土壤正在流失，而答案藏在这些农业智慧里.md",
+                "file": "data/blog/守护大地之脉：走近水土流失监测.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "大地无声的哭泣：我们脚下的土壤正在流失，而答案藏在这些农业智慧里"
+              "title": "守护大地之脉：走近水土流失监测"
             }
           }
         ]
@@ -169,17 +169,18 @@
       "bases:Create new base": false
     }
   },
-  "active": "8c879582cba525c1",
+  "active": "ab9c90318484f83e",
   "lastOpenFiles": [
-    "data/draft/水土保持农学2025-09-10.md",
+    "data/blog/守护大地的绿色长城：防护林的功能、选择与配置.md",
+    "data/blog/守护大地之脉：走近水土流失监测.md",
     "data/blog/大地无声的哭泣：我们脚下的土壤正在流失，而答案藏在这些农业智慧里.md",
+    "data/draft/水土保持农学2025-09-10.md",
     "assets/images/水土保持农学/第一章",
     "assets/images/水土保持农学/Untitled.md",
     "assets/images/水土保持农学",
     "assets/images/水土保持农学.md",
     "assets/images/水土保持农学/第一章/土壤团聚体的组成.png",
     "data/draft/水土保持农学2025-09-09.md",
-    "data/blog/守护大地的绿色长城：防护林的功能、选择与配置.md",
     "data/blog/树木的隐形力量：根系如何守护我们的山川水土.md",
     "data/draft/经济作物栽培学.md",
     "data/blog/经济林：分类、价值与未来发展全景透视.md",
@@ -208,7 +209,6 @@
     "assets/images/水土保持林学/第一章/森林与防护林.png",
     "assets/images/水土保持林学/第一章/水土保持林对降水的影响.png",
     "assets/images/水土保持林学/第一章",
-    "assets/images/水土保持林学/Untitled.md",
     "assets/images/水土保持林学",
     "assets/images/智慧农业/第一章/无人机浇灌.jpg",
     "assets/images/活动/包鸾村.webp",
