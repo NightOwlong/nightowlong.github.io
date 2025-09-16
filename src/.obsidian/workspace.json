@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data/blog/大地的诗行：走进梯田的千姿百态.md",
+                "file": "data/blog/土壤也会生病？了解土壤结构，守护大地健康.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "大地的诗行：走进梯田的千姿百态"
+              "title": "土壤也会生病？了解土壤结构，守护大地健康"
             }
           }
         ]
@@ -171,8 +171,11 @@
   },
   "active": "ab9c90318484f83e",
   "lastOpenFiles": [
-    "data/blog/守护土壤的脉搏：全面解析中国水土流失现状与治理之路.md",
+    "data/blog/土壤的秘密守护者：微生物如何影响水土保持？.md",
+    "data/blog/土壤也会生病？了解土壤结构，守护大地健康.md",
+    "assets/images/水土保持农学/第一章/水土保持农学2025-09-16.png",
     "data/blog/大地的诗行：走进梯田的千姿百态.md",
+    "data/blog/守护土壤的脉搏：全面解析中国水土流失现状与治理之路.md",
     "data/draft/水土保持农学2025-09-10.md",
     "data/draft/水土保持农学2025-09-09.md",
     "data/blog/守护大地之脉：走近水土流失监测.md",
@@ -202,10 +205,8 @@
     "assets/images/水土保持规划学/第一章",
     "data/blog/森林与防护林：生态屏障与可持续发展之路.md",
     "data/blog/水土保持规划学绪论及法律体系.md",
-    "data/blog/水土保持防护林如何调节降水：森林的水文生态智慧.md",
     "pages/index.astro",
     "pages/index.astro.bak",
-    "data/draft/学业导师2025-09-03.md",
     "assets/images/水土保持林学/第一章/森林与防护林.png",
     "assets/images/水土保持林学/第一章/水土保持林对降水的影响.png",
     "assets/images/水土保持林学/第一章",
@@ -214,7 +215,6 @@
     "assets/images/活动/包鸾村.webp",
     "assets/images/活动/包鸾.png",
     "assets/images/活动",
-    "assets/images/landscape.png",
     "assets/images/智慧农业/第一章",
     "assets/images/智慧农业"
   ]
