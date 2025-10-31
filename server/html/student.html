@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生作业查看</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .work-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .work-item h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .work-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+        .error {
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>作业列表</h1>
+    <div class="container" id="workContainer">
+        <div class="loading">加载中...</div>
+    </div>
+
+    <script>
+        // 服务器API地址
+        const API_URL = 'http://10.73.228.193:8000/api/search';
+
+        // 获取并显示作业列表
+        async function loadWorks() {
+            const container = document.getElementById('workContainer');
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('获取数据失败');
+                
+                const result = await response.json();
+                if (result.status === 'ok.') {
+                    renderWorks(result.data.data);
+                } else {
+                    container.innerHTML = '<div class="error">数据加载失败</div>';
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="error">${error.message}</div>`;
+            }
+        }
+
+        // 渲染作业列表
+        function renderWorks(works) {
+            const container = document.getElementById('workContainer');
+            if (works.length === 0) {
+                container.innerHTML = '<div class="error">暂无作业数据</div>';
+                return;
+            }
+
+            container.innerHTML = works.map(work => `
+                <div class="work-item">
+                    <h3>${work.title}</h3>
+                    <div class="work-meta">
+                        <p>创建时间: ${work.create}</p>
+                        <p>截止时间: ${work.deadline}</p>
+                    </div>
+                    <div class="work-description">
+                        <p>${work.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 页面加载时获取作业数据
+        window.onload = loadWorks;
+    </script>
+</body>
+</html>
+

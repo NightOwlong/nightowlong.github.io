@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员作业管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+        }
+        .works-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .work-item {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .work-info {
+            flex: 1;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+        .delete-btn:hover {
+            background-color: #bb2d3b;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加作业表单 -->
+    <div class="form-container">
+        <h2>添加新作业</h2>
+        <form id="addForm">
+            <div class="form-group">
+                <label for="create">创建时间</label>
+                <input type="datetime-local" id="create" required>
+            </div>
+            <div class="form-group">
+                <label for="title">作业标题</label>
+                <input type="text" id="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">作业描述</label>
+                <textarea id="description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="deadline">截止时间</label>
+                <input type="datetime-local" id="deadline" required>
+            </div>
+            <button type="submit">添加作业</button>
+        </form>
+        <div id="formMessage" class="message" style="display: none;"></div>
+    </div>
+
+    <!-- 作业列表及删除功能 -->
+    <div class="works-container">
+        <h2>作业管理</h2>
+        <div id="worksList"></div>
+        <div id="listMessage" class="message" style="display: none;"></div>
+    </div>
+
+    <script>
+        // 服务器API地址
+        const API_BASE = 'http://10.73.228.193:8000/api';
+
+        // 页面加载时获取作业列表
+        window.onload = loadWorks;
+
+        // 加载作业列表
+        async function loadWorks() {
+            try {
+                const response = await fetch(`${API_BASE}/search`);
+                const result = await response.json();
+                if (result.status === 'ok.') {
+                    renderWorks(result.data.data);
+                } else {
+                    showMessage('listMessage', '加载作业失败', 'error');
+                }
+            } catch (error) {
+                showMessage('listMessage', `错误: ${error.message}`, 'error');
+            }
+        }
+
+        // 渲染作业列表
+        function renderWorks(works) {
+            const listContainer = document.getElementById('worksList');
+            if (works.length === 0) {
+                listContainer.innerHTML = '<p>暂无作业数据</p>';
+                return;
+            }
+
+            listContainer.innerHTML = works.map(work => `
+                <div class="work-item">
+                    <div class="work-info">
+                        <h3>${work.title}</h3>
+                        <p>创建: ${work.create} | 截止: ${work.deadline}</p>
+                    </div>
+                    <button class="delete-btn" onclick="deleteWork(${work.id})">删除</button>
+                </div>
+            `).join('');
+        }
+
+        // 添加作业
+        document.getElementById('addForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const workData = {
+                create: document.getElementById('create').value,
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                deadline: document.getElementById('deadline').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(workData)
+                });
+
+                const result = await response.json();
+                if (result.status === 'ok.') {
+                    showMessage('formMessage', '作业添加成功', 'success');
+                    this.reset(); // 重置表单
+                    loadWorks(); // 重新加载列表
+                } else {
+                    showMessage('formMessage', '添加失败', 'error');
+                }
+            } catch (error) {
+                showMessage('formMessage', `错误: ${error.message}`, 'error');
+            }
+        });
+
+        // 删除作业
+        async function deleteWork(id) {
+            if (!confirm(`确定要删除ID为 ${id} 的作业吗?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/delete`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id })
+                });
+
+                const result = await response.json();
+                if (result.status === 'ok.') {
+                    showMessage('listMessage', '作业删除成功', 'success');
+                    loadWorks(); // 重新加载列表
+                } else {
+                    showMessage('listMessage', '删除失败: 找不到该作业', 'error');
+                }
+            } catch (error) {
+                showMessage('listMessage', `错误: ${error.message}`, 'error');
+            }
+        }
+
+        // 显示消息提示
+        function showMessage(elementId, text, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = text;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            
+            // 3秒后自动隐藏消息
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
