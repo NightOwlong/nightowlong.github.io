@@ -3,13 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学生作业查看</title>
+    <title>学生任务系统</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+            color: #444;
+            font-size: 1.1em;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .normal {
+            color: #2e7d32; /* 正常-绿色 */
+        }
+        .attention {
+            color: #e65100; /* 注意-橙色 */
+        }
+        .urgent {
+            color: #c62828; /* 紧急-红色 */
+        }
+        .overdue {
+            color: #616161; /* 过期-灰色 */
         }
         .container {
             margin-top: 20px;
@@ -20,6 +56,7 @@
             padding: 15px;
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
         .work-item h3 {
             margin-top: 0;
@@ -30,6 +67,50 @@
             font-size: 0.9em;
             margin-bottom: 10px;
         }
+        .work-description {
+            margin-bottom: 10px;
+        }
+        .countdown {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .urgency {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .urgency-normal {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .urgency-attention {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        .urgency-urgent {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        .urgency-overdue {
+            background-color: #f5f5f5;
+            color: #616161;
+        }
+        .work-item.attention {
+            border-color: #ff9800;
+            background-color: #fff8e1;
+        }
+        .work-item.urgent {
+            border-color: #f44336;
+            background-color: #ffebee;
+        }
+        .work-item.overdue {
+            border-color: #9e9e9e;
+            background-color: #f5f5f5;
+            opacity: 0.8;
+        }
         .loading {
             text-align: center;
             padding: 50px;
@@ -39,19 +120,50 @@
             text-align: center;
             padding: 20px;
         }
+        .end {
+            color: red;
+            text-align: center;
+            background-color: rgb(255, 246, 232);
+        }
     </style>
 </head>
 <body>
-    <h1>作业列表</h1>
+    <h1 style="text-align: center;"><span style="letter-spacing: 100%;">水土保持与荒漠化防治</span><br>== 任务列表 ==</h1>
+    
+    <!-- 作业统计卡片 -->
+    <div class="stats-container" id="statsContainer">
+        <div class="stat-card">
+            <h3>正常作业</h3>
+            <div class="stat-value normal">--</div>
+        </div>
+        <div class="stat-card">
+            <h3>注意作业</h3>
+            <div class="stat-value attention">--</div>
+        </div>
+        <div class="stat-card">
+            <h3>紧急作业</h3>
+            <div class="stat-value urgent">--</div>
+        </div>
+        <div class="stat-card">
+            <h3>过期作业</h3>
+            <div class="stat-value overdue">--</div>
+        </div>
+    </div>
+
     <div class="container" id="workContainer">
         <div class="loading">加载中...</div>
+    </div>
+    <div class="end">
+        距离截止日期：
+        三天内标注为<b>紧急</b>；
+        五天内标注为<b>注意</b>
     </div>
 
     <script>
         // 服务器API地址
         const API_URL = 'http://10.73.228.193:8000/api/search';
 
-        // 获取并显示作业列表
+        // 获取并显示作业列表及统计数据
         async function loadWorks() {
             const container = document.getElementById('workContainer');
             try {
@@ -60,6 +172,8 @@
                 
                 const result = await response.json();
                 if (result.status === 'ok.') {
+                    // 先统计再渲染列表
+                    calculateStats(result.data.data);
                     renderWorks(result.data.data);
                 } else {
                     container.innerHTML = '<div class="error">数据加载失败</div>';
@@ -67,6 +181,57 @@
             } catch (error) {
                 container.innerHTML = `<div class="error">${error.message}</div>`;
             }
+        }
+
+        // 计算距离截止时间的剩余天数（精确到天）
+        function getCountdownDays(deadlineStr) {
+            const deadline = new Date(deadlineStr);
+            const now = new Date();
+            
+            // 仅保留年月日，忽略时分秒
+            deadline.setHours(0, 0, 0, 0);
+            now.setHours(0, 0, 0, 0);
+            
+            // 转换为天数（向上取整）
+            return Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
+        }
+
+        // 判断作业紧急程度
+        function getUrgencyStatus(deadlineStr) {
+            const daysLeft = getCountdownDays(deadlineStr);
+            
+            if (daysLeft <= 0) {
+                return { status: 'overdue', text: '已截止' };
+            } else if (daysLeft < 3) {
+                return { status: 'urgent', text: '紧急（3天内截止）' };
+            } else if (daysLeft < 5) {
+                return { status: 'attention', text: '注意（5天内截止）' };
+            } else {
+                return { status: 'normal', text: '正常' };
+            }
+        }
+
+        // 统计各类作业数量
+        function calculateStats(works) {
+            // 初始化统计计数器
+            let stats = {
+                normal: 0,      // 正常作业（5天以上）
+                attention: 0,   // 注意作业（3-5天）
+                urgent: 0,      // 紧急作业（3天内）
+                overdue: 0      // 过期作业
+            };
+            
+            // 遍历所有作业进行分类统计
+            works.forEach(work => {
+                const status = getUrgencyStatus(work.deadline).status;
+                stats[status]++;
+            });
+            
+            // 更新统计卡片显示
+            document.querySelector('.stat-value.normal').textContent = stats.normal;
+            document.querySelector('.stat-value.attention').textContent = stats.attention;
+            document.querySelector('.stat-value.urgent').textContent = stats.urgent;
+            document.querySelector('.stat-value.overdue').textContent = stats.overdue;
         }
 
         // 渲染作业列表
@@ -77,18 +242,36 @@
                 return;
             }
 
-            container.innerHTML = works.map(work => `
-                <div class="work-item">
-                    <h3>${work.title}</h3>
-                    <div class="work-meta">
-                        <p>创建时间: ${work.create}</p>
-                        <p>截止时间: ${work.deadline}</p>
+            // 按截止时间排序（最近的排在前面）
+            const sortedWorks = [...works].sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+
+            container.innerHTML = sortedWorks.map(work => {
+                const daysLeft = getCountdownDays(work.deadline);
+                const urgency = getUrgencyStatus(work.deadline);
+                
+                let countdownText = '';
+                if (daysLeft <= 0) {
+                    countdownText = '已逾期';
+                } else {
+                    countdownText = `剩余 ${daysLeft} 天`;
+                }
+
+                return `
+                    <div class="work-item ${urgency.status}">
+                        <h3>${work.title}</h3>
+                        <div class="work-meta">
+                            <p>创建时间: ${work.create}</p>
+                            <p>截止时间: ${work.deadline}
+                                <span class="countdown">${countdownText}</span>
+                                <span class="urgency urgency-${urgency.status}">${urgency.text}</span>
+                            </p>
+                        </div>
+                        <div class="work-description">
+                            <p>${work.description}</p>
+                        </div>
                     </div>
-                    <div class="work-description">
-                        <p>${work.description}</p>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // 页面加载时获取作业数据
@@ -96,4 +279,3 @@
     </script>
 </body>
 </html>
-
